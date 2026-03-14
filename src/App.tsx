@@ -11,6 +11,7 @@ import ReservationsPage from "./pages/ReservationsPage";
 import WalletPage from "./pages/WalletPage";
 import AddListingPage from "./pages/AddListingPage";
 import MyListingsPage from "./pages/MyListingsPage";
+import EarningsPage from "./pages/EarningsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
