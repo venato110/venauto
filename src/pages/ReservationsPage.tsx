@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import ReviewForm from "@/components/ReviewForm";
 
 interface ReservationWithSpot {
   id: string;
@@ -14,6 +15,7 @@ interface ReservationWithSpot {
   total_price: number;
   status: string;
   created_at: string;
+  parking_id: string;
   parking_spots: {
     name: string;
     address: string | null;
@@ -91,12 +93,14 @@ const ReservationsPage = () => {
   const [loading, setLoading] = useState(true);
   const [cancelling, setCancelling] = useState<string | null>(null);
   const [tab, setTab] = useState<"active" | "past">("active");
+  const [reviewedIds, setReviewedIds] = useState<Set<string>>(new Set());
+  const [showReviewFor, setShowReviewFor] = useState<string | null>(null);
 
   const fetchReservations = async () => {
     if (!user) return;
     const { data, error } = await supabase
       .from("reservations")
-      .select("id, start_time, duration, total_price, status, created_at, parking_spots(name, address)")
+      .select("id, start_time, duration, total_price, status, created_at, parking_id, parking_spots(name, address)")
       .eq("user_id", user.id)
       .order("created_at", { ascending: false });
 
@@ -235,6 +239,27 @@ const ReservationsPage = () => {
                 </div>
                 {r.status === "active" && (
                   <CountdownTimer startTime={r.start_time} duration={r.duration} />
+                )}
+                {r.status !== "active" && !reviewedIds.has(r.id) && (
+                  showReviewFor === r.id ? (
+                    <ReviewForm
+                      reservationId={r.id}
+                      parkingId={r.parking_id}
+                      onSubmitted={() => {
+                        setReviewedIds((prev) => new Set(prev).add(r.id));
+                        setShowReviewFor(null);
+                      }}
+                    />
+                  ) : (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="mt-3 w-full"
+                      onClick={() => setShowReviewFor(r.id)}
+                    >
+                      ⭐ Leave a Review
+                    </Button>
+                  )
                 )}
               </motion.div>
             ))}

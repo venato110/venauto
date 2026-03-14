@@ -28,6 +28,7 @@ const AddListingPage = () => {
   const [pricePerHour, setPricePerHour] = useState("");
   const [listingType, setListingType] = useState("garage");
   const [latitude, setLatitude] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [longitude, setLongitude] = useState("");
 
   const handleUseMyLocation = () => {
@@ -74,6 +75,7 @@ const AddListingPage = () => {
       longitude: parseFloat(longitude),
       owner_id: user.id,
       status: "available",
+      image_url: imageUrl || null,
     });
 
     if (error) {
@@ -155,6 +157,18 @@ const AddListingPage = () => {
             <FileText className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
             <Input placeholder="Covered, 24/7 access..." value={description} onChange={(e) => setDescription(e.target.value)} className="pl-10" />
           </div>
+        </div>
+
+        <div>
+          <label className="mb-1.5 block text-sm font-medium text-foreground">Photo URL (optional)</label>
+          <div className="relative">
+            <Input placeholder="https://example.com/photo.jpg" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
+          </div>
+          {imageUrl && (
+            <div className="mt-2 rounded-xl overflow-hidden h-32">
+              <img src={imageUrl} alt="Preview" className="w-full h-full object-cover" onError={(e) => (e.currentTarget.style.display = "none")} />
+            </div>
+          )}
         </div>
 
         {/* Location */}

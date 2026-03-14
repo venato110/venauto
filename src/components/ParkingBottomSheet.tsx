@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, Clock, X, Check, Car, Wallet } from "lucide-react";
+import { MapPin, Clock, X, Check, Car, Wallet, Image } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tables } from "@/integrations/supabase/types";
+import SpotRating from "@/components/SpotRating";
 
 type ParkingSpot = Tables<"parking_spots">;
 
@@ -91,7 +92,14 @@ const ParkingBottomSheet = ({ spot, onClose, onReserve, walletBalance = 0 }: Par
               </motion.div>
             ) : (
               <>
-                <div className="mb-4 flex items-start gap-3">
+                {/* Photo */}
+                {(spot as any).image_url && (
+                  <div className="mb-4 -mx-2 rounded-xl overflow-hidden h-36">
+                    <img src={(spot as any).image_url} alt={spot.name} className="w-full h-full object-cover" />
+                  </div>
+                )}
+
+                <div className="mb-2 flex items-start gap-3">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-lg">
                     {typeEmoji[(spot as any).listing_type] || "🅿️"}
                   </div>
@@ -100,6 +108,9 @@ const ParkingBottomSheet = ({ spot, onClose, onReserve, walletBalance = 0 }: Par
                     <div className="mt-1 flex items-center gap-1 text-sm text-muted-foreground">
                       <MapPin className="h-3 w-3" />
                       {spot.address || "No address"}
+                    </div>
+                    <div className="mt-1">
+                      <SpotRating parkingId={spot.id} compact />
                     </div>
                   </div>
                 </div>
