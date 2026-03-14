@@ -93,6 +93,8 @@ const ReservationsPage = () => {
   const [loading, setLoading] = useState(true);
   const [cancelling, setCancelling] = useState<string | null>(null);
   const [tab, setTab] = useState<"active" | "past">("active");
+  const [reviewedIds, setReviewedIds] = useState<Set<string>>(new Set());
+  const [showReviewFor, setShowReviewFor] = useState<string | null>(null);
 
   const fetchReservations = async () => {
     if (!user) return;
