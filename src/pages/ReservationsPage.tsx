@@ -240,6 +240,27 @@ const ReservationsPage = () => {
                 {r.status === "active" && (
                   <CountdownTimer startTime={r.start_time} duration={r.duration} />
                 )}
+                {r.status !== "active" && !reviewedIds.has(r.id) && (
+                  showReviewFor === r.id ? (
+                    <ReviewForm
+                      reservationId={r.id}
+                      parkingId={r.parking_id}
+                      onSubmitted={() => {
+                        setReviewedIds((prev) => new Set(prev).add(r.id));
+                        setShowReviewFor(null);
+                      }}
+                    />
+                  ) : (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="mt-3 w-full"
+                      onClick={() => setShowReviewFor(r.id)}
+                    >
+                      ⭐ Leave a Review
+                    </Button>
+                  )
+                )}
               </motion.div>
             ))}
           </AnimatePresence>
