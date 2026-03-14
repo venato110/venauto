@@ -8,6 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Tables } from "@/integrations/supabase/types";
 import { useToast } from "@/hooks/use-toast";
+import ThemeToggle from "@/components/ThemeToggle";
 
 type ParkingSpot = Tables<"parking_spots">;
 type Reservation = Tables<"reservations">;
@@ -125,6 +126,10 @@ const ProfilePage = () => {
             {user?.email}
           </p>
         </motion.div>
+        {/* Theme toggle */}
+        <div className="mb-4">
+          <ThemeToggle />
+        </div>
 
         {/* Tabs */}
         <div className="mb-4 flex rounded-xl bg-muted p-1">
