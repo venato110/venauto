@@ -38,6 +38,7 @@ const App = () => (
             <Route path="/wallet" element={<ProtectedRoute><WalletPage /></ProtectedRoute>} />
             <Route path="/add-listing" element={<ProtectedRoute><AddListingPage /></ProtectedRoute>} />
             <Route path="/my-listings" element={<ProtectedRoute><MyListingsPage /></ProtectedRoute>} />
+            <Route path="/earnings" element={<ProtectedRoute><EarningsPage /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
