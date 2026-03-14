@@ -12,6 +12,7 @@ import WalletPage from "./pages/WalletPage";
 import AddListingPage from "./pages/AddListingPage";
 import MyListingsPage from "./pages/MyListingsPage";
 import EarningsPage from "./pages/EarningsPage";
+import FavoritesPage from "./pages/FavoritesPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
