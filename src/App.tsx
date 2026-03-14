@@ -30,6 +30,7 @@ const App = () => (
             <Route path="/" element={<SplashScreen />} />
             <Route path="/auth" element={<AuthPage />} />
             <Route path="/map" element={<ProtectedRoute><MapScreen /></ProtectedRoute>} />
+            <Route path="/reservations" element={<ProtectedRoute><ReservationsPage /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
