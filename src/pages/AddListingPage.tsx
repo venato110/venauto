@@ -28,6 +28,7 @@ const AddListingPage = () => {
   const [pricePerHour, setPricePerHour] = useState("");
   const [listingType, setListingType] = useState("garage");
   const [latitude, setLatitude] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [longitude, setLongitude] = useState("");
 
   const handleUseMyLocation = () => {
