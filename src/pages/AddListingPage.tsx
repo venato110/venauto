@@ -75,6 +75,7 @@ const AddListingPage = () => {
       longitude: parseFloat(longitude),
       owner_id: user.id,
       status: "available",
+      image_url: imageUrl || null,
     });
 
     if (error) {
