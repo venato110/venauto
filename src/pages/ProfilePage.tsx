@@ -126,6 +126,10 @@ const ProfilePage = () => {
             {user?.email}
           </p>
         </motion.div>
+        {/* Theme toggle */}
+        <div className="mb-4">
+          <ThemeToggle />
+        </div>
 
         {/* Tabs */}
         <div className="mb-4 flex rounded-xl bg-muted p-1">
