@@ -81,6 +81,9 @@ const MapScreen = () => {
 
       {/* Action buttons */}
       <div className="absolute right-4 top-16 z-[999] flex flex-col gap-2">
+        <div className="relative">
+          <NotificationBell />
+        </div>
         <button
           onClick={() => navigate("/wallet")}
           className="glass-card flex h-10 items-center gap-2 rounded-full px-3 shadow-lg"
