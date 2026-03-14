@@ -7,6 +7,7 @@ import { AuthProvider, useAuth } from "@/hooks/useAuth";
 import SplashScreen from "./pages/SplashScreen";
 import AuthPage from "./pages/AuthPage";
 import MapScreen from "./pages/MapScreen";
+import ReservationsPage from "./pages/ReservationsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
