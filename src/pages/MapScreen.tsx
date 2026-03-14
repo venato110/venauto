@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { LogOut, User, Plus, Wallet, List, TrendingUp } from "lucide-react";
+import { LogOut, User, Plus, Wallet, List, TrendingUp, Heart } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Tables } from "@/integrations/supabase/types";
