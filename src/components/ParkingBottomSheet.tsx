@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, Clock, X, Check, Car } from "lucide-react";
+import { MapPin, Clock, X, Check, Car, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tables } from "@/integrations/supabase/types";
 
@@ -10,17 +10,18 @@ interface ParkingBottomSheetProps {
   spot: ParkingSpot | null;
   onClose: () => void;
   onReserve: (spot: ParkingSpot, duration: number) => Promise<void>;
+  walletBalance?: number;
 }
 
 const COMMISSION_RATE = 0.1;
 
-const ParkingBottomSheet = ({ spot, onClose, onReserve }: ParkingBottomSheetProps) => {
+const ParkingBottomSheet = ({ spot, onClose, onReserve, walletBalance = 0 }: ParkingBottomSheetProps) => {
   const [duration, setDuration] = useState(1);
   const [reserving, setReserving] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
 
   const totalPrice = spot ? Number(spot.price_per_hour) * duration : 0;
-  const commission = totalPrice * COMMISSION_RATE;
+  const canAfford = walletBalance >= totalPrice;
 
   const handleReserve = async () => {
     if (!spot) return;
@@ -43,6 +44,13 @@ const ParkingBottomSheet = ({ spot, onClose, onReserve }: ParkingBottomSheetProp
     setConfirmed(false);
     setDuration(1);
     onClose();
+  };
+
+  const typeEmoji: Record<string, string> = {
+    garage: "🏠",
+    parking_lot: "🅿️",
+    arena: "🏟️",
+    mall: "🏬",
   };
 
   return (
@@ -79,19 +87,19 @@ const ParkingBottomSheet = ({ spot, onClose, onReserve }: ParkingBottomSheetProp
                   <Check className="h-8 w-8" style={{ color: "hsl(145, 63%, 42%)" }} />
                 </div>
                 <h3 className="text-xl font-bold text-foreground">Reserved!</h3>
-                <p className="mt-1 text-muted-foreground">Your spot is secured</p>
+                <p className="mt-1 text-muted-foreground">Paid from wallet</p>
               </motion.div>
             ) : (
               <>
                 <div className="mb-4 flex items-start gap-3">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10">
-                    <Car className="h-5 w-5 text-primary" />
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-lg">
+                    {typeEmoji[(spot as any).listing_type] || "🅿️"}
                   </div>
                   <div>
                     <h3 className="text-lg font-bold text-foreground">{spot.name}</h3>
                     <div className="mt-1 flex items-center gap-1 text-sm text-muted-foreground">
                       <MapPin className="h-3 w-3" />
-                      {spot.address}
+                      {spot.address || "No address"}
                     </div>
                   </div>
                 </div>
@@ -134,19 +142,30 @@ const ParkingBottomSheet = ({ spot, onClose, onReserve }: ParkingBottomSheetProp
                     <span className="text-sm text-muted-foreground">Total</span>
                     <span className="text-xl font-bold text-foreground">{totalPrice.toFixed(2)} AZN</span>
                   </div>
+
+                  <div className="mt-2 flex items-center justify-between">
+                    <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                      <Wallet className="h-3 w-3" /> Wallet balance
+                    </span>
+                    <span className={`text-xs font-semibold ${canAfford ? "text-foreground" : "text-destructive"}`}>
+                      {walletBalance.toFixed(2)} AZN
+                    </span>
+                  </div>
                 </div>
 
                 <Button
                   onClick={handleReserve}
-                  disabled={spot.status === "reserved" || reserving}
+                  disabled={spot.status === "reserved" || reserving || !canAfford}
                   className="w-full"
                   size="lg"
                 >
                   {reserving
-                    ? "Reserving..."
+                    ? "Processing..."
                     : spot.status === "reserved"
                     ? "Already Reserved"
-                    : `Reserve for ${totalPrice.toFixed(2)} AZN`}
+                    : !canAfford
+                    ? "Insufficient Balance"
+                    : `Pay ${totalPrice.toFixed(2)} AZN from Wallet`}
                 </Button>
               </>
             )}
