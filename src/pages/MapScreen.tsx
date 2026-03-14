@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import ParkingMap from "@/components/ParkingMap";
 import SearchBar from "@/components/SearchBar";
 import ParkingBottomSheet from "@/components/ParkingBottomSheet";
+import NotificationBell from "@/components/NotificationBell";
 
 type ParkingSpot = Tables<"parking_spots">;
 
