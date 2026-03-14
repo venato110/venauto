@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import ReviewForm from "@/components/ReviewForm";
 
 interface ReservationWithSpot {
   id: string;
