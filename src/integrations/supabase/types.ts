@@ -18,30 +18,42 @@ export type Database = {
         Row: {
           address: string | null
           created_at: string
+          description: string | null
           id: string
+          image_url: string | null
           latitude: number
+          listing_type: string
           longitude: number
           name: string
+          owner_id: string | null
           price_per_hour: number
           status: string
         }
         Insert: {
           address?: string | null
           created_at?: string
+          description?: string | null
           id?: string
+          image_url?: string | null
           latitude: number
+          listing_type?: string
           longitude: number
           name: string
+          owner_id?: string | null
           price_per_hour?: number
           status?: string
         }
         Update: {
           address?: string | null
           created_at?: string
+          description?: string | null
           id?: string
+          image_url?: string | null
           latitude?: number
+          listing_type?: string
           longitude?: number
           name?: string
+          owner_id?: string | null
           price_per_hour?: number
           status?: string
         }
@@ -117,6 +129,68 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      wallet_transactions: {
+        Row: {
+          amount: number
+          created_at: string
+          description: string | null
+          id: string
+          reservation_id: string | null
+          type: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          reservation_id?: string | null
+          type: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          reservation_id?: string | null
+          type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wallet_transactions_reservation_id_fkey"
+            columns: ["reservation_id"]
+            isOneToOne: false
+            referencedRelation: "reservations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      wallets: {
+        Row: {
+          balance: number
+          created_at: string
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          balance?: number
+          created_at?: string
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          balance?: number
+          created_at?: string
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
       }
     }
     Views: {
