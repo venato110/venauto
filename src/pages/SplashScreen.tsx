@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Car } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 
 const SplashScreen = () => {
@@ -24,32 +23,45 @@ const SplashScreen = () => {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="text-center"
       >
+        {/* Loqo Animasiyası */}
         <motion.div
-          initial={{ y: -20 }}
-          animate={{ y: 0 }}
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
-          className="mb-6 flex justify-center"
+          className="mb-8 flex justify-center"
         >
-          <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary-foreground/20 backdrop-blur-sm">
-            <Car className="h-10 w-10 text-primary-foreground" />
-          </div>
+          {/* Arxa plansız, birbaşa görünən loqo */}
+          <img 
+            src="/logoo1.png" 
+            alt="Venauto Logo" 
+            className="h-32 w-32 object-contain"
+            onError={(e) => {
+              e.currentTarget.style.display = 'none'; 
+            }}
+          />
         </motion.div>
+
+        {/* Tətbiq Adı */}
         <motion.h1
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
           className="text-4xl font-bold tracking-tight text-primary-foreground"
         >
-          Venato
+          Venauto
         </motion.h1>
+
+        {/* Şüar */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7 }}
           className="mt-2 text-primary-foreground/70"
         >
-          Find & reserve parking instantly
+          Anında park yeri tap və rezerv et
         </motion.p>
+
+        {/* Yüklənmə İndikatoru */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
