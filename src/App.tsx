@@ -12,6 +12,7 @@ import WalletPage from "./pages/WalletPage";
 import AddListingPage from "./pages/AddListingPage";
 import MyListingsPage from "./pages/MyListingsPage";
 import EarningsPage from "./pages/EarningsPage";
+import FavoritesPage from "./pages/FavoritesPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -39,6 +40,7 @@ const App = () => (
             <Route path="/add-listing" element={<ProtectedRoute><AddListingPage /></ProtectedRoute>} />
             <Route path="/my-listings" element={<ProtectedRoute><MyListingsPage /></ProtectedRoute>} />
             <Route path="/earnings" element={<ProtectedRoute><EarningsPage /></ProtectedRoute>} />
+            <Route path="/favorites" element={<ProtectedRoute><FavoritesPage /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, MapPin, DollarSign, FileText, Tag, Locate } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import LocationPicker from "@/components/LocationPicker";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -183,6 +184,17 @@ const AddListingPage = () => {
           <div className="relative">
             <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
             <Input placeholder="Address" value={address} onChange={(e) => setAddress(e.target.value)} className="pl-10" required />
+          </div>
+          <div className="mt-2">
+            <LocationPicker
+              latitude={latitude}
+              longitude={longitude}
+              onLocationChange={(lat, lng) => {
+                setLatitude(lat);
+                setLongitude(lng);
+              }}
+            />
+            <p className="mt-1.5 text-xs text-muted-foreground">Tap the map to set location</p>
           </div>
           <div className="mt-2 grid grid-cols-2 gap-2">
             <Input type="number" step="any" placeholder="Latitude" value={latitude} onChange={(e) => setLatitude(e.target.value)} required />
