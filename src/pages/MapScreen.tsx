@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { LogOut, User } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
@@ -69,7 +69,7 @@ const MapScreen = () => {
   };
 
   return (
-    <div className="relative h-screen w-screen overflow-hidden">
+    <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0 }}>
       <ParkingMap spots={spots} center={center} onSpotClick={setSelectedSpot} />
 
       {/* Search overlay */}

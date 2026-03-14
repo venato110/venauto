@@ -1,7 +1,5 @@
-import { useEffect } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { useEffect, useRef } from "react";
 import L from "leaflet";
-import "leaflet/dist/leaflet.css";
 import { Tables } from "@/integrations/supabase/types";
 
 type ParkingSpot = Tables<"parking_spots">;
@@ -23,18 +21,6 @@ const createIcon = (color: string) =>
 const availableIcon = createIcon("hsl(145, 63%, 42%)");
 const reservedIcon = createIcon("hsl(0, 72%, 51%)");
 
-interface MapCenterProps {
-  center: [number, number];
-}
-
-const MapCenter = ({ center }: MapCenterProps) => {
-  const map = useMap();
-  useEffect(() => {
-    map.flyTo(center, 14, { duration: 1 });
-  }, [center, map]);
-  return null;
-};
-
 interface ParkingMapProps {
   spots: ParkingSpot[];
   center: [number, number];
@@ -42,35 +28,64 @@ interface ParkingMapProps {
 }
 
 const ParkingMap = ({ spots, center, onSpotClick }: ParkingMapProps) => {
-  return (
-    <MapContainer
-      center={center}
-      zoom={13}
-      className="h-full w-full"
-      zoomControl={false}
-    >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <MapCenter center={center} />
-      {spots.map((spot) => (
-        <Marker
-          key={spot.id}
-          position={[spot.latitude, spot.longitude]}
-          icon={spot.status === "available" ? availableIcon : reservedIcon}
-          eventHandlers={{
-            click: () => onSpotClick(spot),
-          }}
-        >
-          <Popup>
-            <div className="text-sm font-medium">{spot.name}</div>
-            <div className="text-xs text-muted-foreground">{spot.price_per_hour} AZN/hr</div>
-          </Popup>
-        </Marker>
-      ))}
-    </MapContainer>
-  );
+  const mapRef = useRef<L.Map | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const markersRef = useRef<L.Marker[]>([]);
+
+  // Initialize map
+  useEffect(() => {
+    if (!containerRef.current || mapRef.current) return;
+
+    const map = L.map(containerRef.current, {
+      center,
+      zoom: 13,
+      zoomControl: false,
+    });
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>',
+    }).addTo(map);
+
+    mapRef.current = map;
+
+    return () => {
+      map.remove();
+      mapRef.current = null;
+    };
+  }, []);
+
+  // Update center
+  useEffect(() => {
+    if (mapRef.current) {
+      mapRef.current.flyTo(center, 14, { duration: 1 });
+    }
+  }, [center]);
+
+  // Update markers
+  useEffect(() => {
+    if (!mapRef.current) return;
+
+    // Remove old markers
+    markersRef.current.forEach((m) => m.remove());
+    markersRef.current = [];
+
+    // Add new markers
+    spots.forEach((spot) => {
+      const marker = L.marker([spot.latitude, spot.longitude], {
+        icon: spot.status === "available" ? availableIcon : reservedIcon,
+      })
+        .addTo(mapRef.current!)
+        .on("click", () => onSpotClick(spot));
+
+      marker.bindPopup(
+        `<div style="font-size:13px"><strong>${spot.name}</strong><br/>${spot.price_per_hour} AZN/hr</div>`
+      );
+
+      markersRef.current.push(marker);
+    });
+  }, [spots, onSpotClick]);
+
+  return <div ref={containerRef} style={{ position: "absolute", inset: 0 }} />;
 };
 
 export default ParkingMap;
