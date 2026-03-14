@@ -141,6 +141,13 @@ const MapScreen = () => {
           <TrendingUp className="h-4 w-4 text-foreground" />
         </button>
         <button
+          onClick={() => navigate("/favorites")}
+          className="glass-card flex h-10 w-10 items-center justify-center rounded-full shadow-lg"
+          title="Favorites"
+        >
+          <Heart className="h-4 w-4 text-foreground" />
+        </button>
+        <button
           onClick={() => navigate("/reservations")}
           className="glass-card flex h-10 w-10 items-center justify-center rounded-full shadow-lg"
         >

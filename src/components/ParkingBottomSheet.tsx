@@ -105,7 +105,10 @@ const ParkingBottomSheet = ({ spot, onClose, onReserve, walletBalance = 0 }: Par
                     {typeEmoji[(spot as any).listing_type] || "🅿️"}
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-foreground">{spot.name}</h3>
+                    <div className="flex items-center gap-1">
+                      <h3 className="text-lg font-bold text-foreground">{spot.name}</h3>
+                      <FavoriteButton parkingId={spot.id} />
+                    </div>
                     <div className="mt-1 flex items-center gap-1 text-sm text-muted-foreground">
                       <MapPin className="h-3 w-3" />
                       {spot.address || "No address"}
