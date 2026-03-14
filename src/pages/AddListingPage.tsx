@@ -159,6 +159,17 @@ const AddListingPage = () => {
           </div>
         </div>
 
+        <div>
+          <label className="mb-1.5 block text-sm font-medium text-foreground">Photo URL (optional)</label>
+          <div className="relative">
+            <Input placeholder="https://example.com/photo.jpg" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
+          </div>
+          {imageUrl && (
+            <div className="mt-2 rounded-xl overflow-hidden h-32">
+              <img src={imageUrl} alt="Preview" className="w-full h-full object-cover" onError={(e) => (e.currentTarget.style.display = "none")} />
+            </div>
+          )}
+
         {/* Location */}
         <div>
           <div className="mb-1.5 flex items-center justify-between">
