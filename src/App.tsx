@@ -11,6 +11,7 @@ import ReservationsPage from "./pages/ReservationsPage";
 import WalletPage from "./pages/WalletPage";
 import AddListingPage from "./pages/AddListingPage";
 import MyListingsPage from "./pages/MyListingsPage";
+import EarningsPage from "./pages/EarningsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -37,6 +38,7 @@ const App = () => (
             <Route path="/wallet" element={<ProtectedRoute><WalletPage /></ProtectedRoute>} />
             <Route path="/add-listing" element={<ProtectedRoute><AddListingPage /></ProtectedRoute>} />
             <Route path="/my-listings" element={<ProtectedRoute><MyListingsPage /></ProtectedRoute>} />
+            <Route path="/earnings" element={<ProtectedRoute><EarningsPage /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
