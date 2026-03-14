@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, Clock, X, Check, Car, Wallet } from "lucide-react";
+import { MapPin, Clock, X, Check, Car, Wallet, Image } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tables } from "@/integrations/supabase/types";
+import SpotRating from "@/components/SpotRating";
 
 type ParkingSpot = Tables<"parking_spots">;
 
