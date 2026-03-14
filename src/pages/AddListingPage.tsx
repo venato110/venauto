@@ -169,6 +169,7 @@ const AddListingPage = () => {
               <img src={imageUrl} alt="Preview" className="w-full h-full object-cover" onError={(e) => (e.currentTarget.style.display = "none")} />
             </div>
           )}
+        </div>
 
         {/* Location */}
         <div>
