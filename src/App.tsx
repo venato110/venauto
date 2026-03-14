@@ -7,6 +7,7 @@ import { AuthProvider, useAuth } from "@/hooks/useAuth";
 import SplashScreen from "./pages/SplashScreen";
 import AuthPage from "./pages/AuthPage";
 import MapScreen from "./pages/MapScreen";
+import ReservationsPage from "./pages/ReservationsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,6 +30,7 @@ const App = () => (
             <Route path="/" element={<SplashScreen />} />
             <Route path="/auth" element={<AuthPage />} />
             <Route path="/map" element={<ProtectedRoute><MapScreen /></ProtectedRoute>} />
+            <Route path="/reservations" element={<ProtectedRoute><ReservationsPage /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

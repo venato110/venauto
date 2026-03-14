@@ -80,6 +80,12 @@ const MapScreen = () => {
       {/* User menu */}
       <div className="absolute right-4 top-16 z-[999] flex gap-2">
         <button
+          onClick={() => navigate("/reservations")}
+          className="glass-card flex h-10 w-10 items-center justify-center rounded-full shadow-lg"
+        >
+          <User className="h-4 w-4 text-foreground" />
+        </button>
+        <button
           onClick={handleSignOut}
           className="glass-card flex h-10 w-10 items-center justify-center rounded-full shadow-lg"
         >
