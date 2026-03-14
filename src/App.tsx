@@ -8,6 +8,9 @@ import SplashScreen from "./pages/SplashScreen";
 import AuthPage from "./pages/AuthPage";
 import MapScreen from "./pages/MapScreen";
 import ReservationsPage from "./pages/ReservationsPage";
+import WalletPage from "./pages/WalletPage";
+import AddListingPage from "./pages/AddListingPage";
+import MyListingsPage from "./pages/MyListingsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,6 +34,9 @@ const App = () => (
             <Route path="/auth" element={<AuthPage />} />
             <Route path="/map" element={<ProtectedRoute><MapScreen /></ProtectedRoute>} />
             <Route path="/reservations" element={<ProtectedRoute><ReservationsPage /></ProtectedRoute>} />
+            <Route path="/wallet" element={<ProtectedRoute><WalletPage /></ProtectedRoute>} />
+            <Route path="/add-listing" element={<ProtectedRoute><AddListingPage /></ProtectedRoute>} />
+            <Route path="/my-listings" element={<ProtectedRoute><MyListingsPage /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
