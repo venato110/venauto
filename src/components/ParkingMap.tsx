@@ -45,7 +45,7 @@ const ParkingMap = ({ spots, center, onSpotClick }: ParkingMapProps) => {
     <MapContainer
       center={center}
       zoom={13}
-      className="h-full w-full"
+      style={{ height: "100%", width: "100%" }}
       zoomControl={false}
     >
       <TileLayer
