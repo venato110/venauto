@@ -15,6 +15,7 @@ interface ReservationWithSpot {
   total_price: number;
   status: string;
   created_at: string;
+  parking_id: string;
   parking_spots: {
     name: string;
     address: string | null;
