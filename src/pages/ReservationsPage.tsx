@@ -98,7 +98,7 @@ const ReservationsPage = () => {
     if (!user) return;
     const { data, error } = await supabase
       .from("reservations")
-      .select("id, start_time, duration, total_price, status, created_at, parking_spots(name, address)")
+      .select("id, start_time, duration, total_price, status, created_at, parking_id, parking_spots(name, address)")
       .eq("user_id", user.id)
       .order("created_at", { ascending: false });
 
